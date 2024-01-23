@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(0, 0, 0);
+            color: rgb(32, 224, 208);
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #mainDiv {
+            margin-top: 20px;
+            width: 310px;
+            height: auto;
+            /* background-color: aliceblue; */
+            background-image: url("cloud3.jpg");
+            overflow: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            outline: none;
+            border: none;
+            background-color: rgb(0, 0, 0);
+            width: 100%;
+            color: aqua;
+
+        }
+
+        .datashow {
+            box-shadow: 0px 0px 10px 1px rgba(59, 219, 126, 0.199);
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+
+        .fa-search {
+            cursor: pointer;
+        }
+
+        .downDiv {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mainDiv" class="px-2">
+        <div class="d-flex justify-content-between ">
+            <div><i class="fa fa-arrow-left fs-4"></i></div>
+            <div>
+                <input type="search" id="inputd" onchange="inputChange()">
+            </div>
+            <div><i id="search" class="fa fa-search fs-4"></i></div>
+        </div>
+        <!-- <div id="suge">
+            <script src="jScript.js"></script>
+        </div> -->
+        
+        <div class="d-flex justify-content-center align-items-center flex-column mt-4">
+            <div>
+                <img id="img" src="weatherpng.png" alt="" srcset="" width="180px" height="180px">
+            </div>
+            <div>
+                <h1><span id="temp">0°c</span></h1>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around  datashow">
+            <div class=" col-lg-4 d-flex justify-content-center flex-column align-items-center">
+                <h6 id="wind">0</h6>
+                <i class='fa fa-mixcloud fs-4'></i>
+                <i>wind-speed</i>
+            </div>
+            <div class=" col-lg-4 d-flex justify-content-center flex-column align-items-center">
+                <h6 id="mintem">0°c</h6>
+                <i class='fa fa-cloud fs-4'></i>
+                <i>min-tem</i>
+            </div>
+            <div class=" col-lg-4 d-flex justify-content-center flex-column align-items-center">
+                <h6 id="maxtem">0°c</h6>
+                <i class='fa fa-cloud fs-4'></i>
+                <i>max-tem</i>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around  datashow mt-3">
+            <div class=" col-lg-3 d-flex justify-content-center flex-column align-items-center mx-1">
+                <i id="humidity">0</i>
+                <i class='fa fa-cloud fs-5'></i>
+                <i class="downDiv">humidity</i>
+            </div>
+            <div class=" col-lg-3 d-flex justify-content-center flex-column align-items-center mx-1">
+                <i id="winddeg">0</i>
+                <i class='fa fa-cloud fs-5'></i>
+                <i class="downDiv">wind_degrees</i>
+            </div>
+            <div class=" col-lg-3 d-flex justify-content-center flex-column align-items-center mx-1">
+                <i id="cloud">0</i>
+                <i class='fa fa-cloud fs-5'></i>
+                <i class="downDiv">cloud pct</i>
+            </div>
+            <div class=" col-lg-3 d-flex justify-content-center flex-column align-items-center mx-1">
+                <i id="feels">0</i>
+                <i class='fa fa-cloud fs-5'></i>
+                <i class="downDiv">feels like</i>
+            </div>
+
+
+        </div>
+        <div class="d-flex justify-content-around px-3 py-3 mt-4">
+            <div class="col-lg-4 d-flex justify-content-center align-items-center"><i class="fa fa-home fs-5"></i></div>
+            <div class="col-lg-4 d-flex justify-content-center align-items-center"><i class="fa fa-star fs-5"></i></div>
+            <div class="col-lg-4 d-flex justify-content-center align-items-center"><i class="fa fa-share fs-5"></i>
+            </div>
+            <div class="col-lg-4 d-flex justify-content-center align-items-center"><i class="fa fa-map fs-5"></i></div>
+        </div>
+    </div>
+    <script>
+        let WeatherApi = async (tar) => {
+            try {
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': 'b45e96323fmshf5e4bc50d3b8a90p1e091djsnfb21cde4eb87',
+                        'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+                    }
+                };
+                let result = await fetch(`https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=${tar}`, options);
+                let data = await result.json();
+                return data;
+            }
+            catch (e) {
+                return "sandeep";
+            }
+
+        }
+
+
+        let searchbtn = document.getElementById("search");
+        let inputData = document.getElementById("inputd");
+        let temp = document.getElementById("temp");
+        let wind = document.getElementById("wind");
+        let mintemp = document.getElementById("mintem");
+        let maxtemp = document.getElementById("maxtem");
+
+        let humidity = document.getElementById("humidity");
+        let feels = document.getElementById("feels");
+        let winddeg = document.getElementById("winddeg");
+        let cloud = document.getElementById("cloud");
+        let img = document.getElementById("img");
+
+
+
+        let inputSection = async (e) => {
+
+            let call = await WeatherApi(e.target.value);
+            if ("An unexpected error occured." != call.error) {
+                img.setAttribute("src", "weatherpng.png");
+                console.log(call);
+                let weatherdata = call;
+                temp.innerHTML = weatherdata.temp + "°c";
+                wind.innerHTML = weatherdata.wind_speed;
+                mintemp.innerHTML = weatherdata.min_temp;
+                maxtemp.innerHTML = weatherdata.max_temp;
+                cloud.innerHTML = weatherdata.cloud_pct;
+                feels.innerHTML = weatherdata.feels_like;
+                winddeg.innerHTML = weatherdata.wind_degrees;
+                humidity.innerText = weatherdata.humidity;
+            }
+            else {
+                img.setAttribute("src", "cloud.png");
+                temp.innerHTML = "0°c";
+                wind.innerHTML = "0°c";
+                mintemp.innerHTML = "0°c";
+                maxtemp.innerHTML = "0°c";
+                cloud.innerHTML = "0";
+                feels.innerHTML = "0°c";
+                winddeg.innerHTML = "0";
+                humidity.innerText = "0";
+            }
+
+
+
+        }
+        inputData.addEventListener("change", inputSection);
+
+    </script>
+</body>
+
+</html>
